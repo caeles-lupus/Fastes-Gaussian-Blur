@@ -1,6 +1,6 @@
 {
-Источник алгоритма: http://blog.ivank.net/fastest-gaussian-blur.html
-Источник кода на C#: https://github.com/mdymel/superfastblur/blob/master/SuperfastBlur/GaussianBlur.cs
+РСЃС‚РѕС‡РЅРёРє Р°Р»РіРѕСЂРёС‚РјР°: http://blog.ivank.net/fastest-gaussian-blur.html
+РСЃС‚РѕС‡РЅРёРє РєРѕРґР° РЅР° C#: https://github.com/mdymel/superfastblur/blob/master/SuperfastBlur/GaussianBlur.cs
 }
 uses graphabc;
 
@@ -62,19 +62,11 @@ type
         var newBlue:  array of integer = new integer[_width * _height];
         var dest:     array of integer = new integer[_width * _height];
         
-        { $omp parallel sections} // выполняются параллельно
-        { TODO
-        Parallel.Invoke(
-        () -> gaussBlur_4(_red, newRed, radial),
-        () -> gaussBlur_4(_green, newGreen, radial),
-        () -> gaussBlur_4(_blue, newBlue, radial));
-        }
-        
         gaussBlur_4(_red, newRed, radial);
         gaussBlur_4(_green, newGreen, radial);
         gaussBlur_4(_blue, newBlue, radial);
         
-        // нормализация. готовим integer для перевода в byte
+        // РЅРѕСЂРјР°Р»РёР·Р°С†РёСЏ. РіРѕС‚РѕРІРёРј integer РґР»СЏ РїРµСЂРµРІРѕРґР° РІ byte
         {$omp parallel for}
         For var i := 0 to dest.Length-1 do begin
           if (newRed[i] > 255) then newRed[i] := 255;
